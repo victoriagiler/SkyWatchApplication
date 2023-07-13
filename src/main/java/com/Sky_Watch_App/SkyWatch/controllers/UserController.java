@@ -1,12 +1,9 @@
-package com.Sky_Watch_App.SkyWatch.Controllers;
+package com.Sky_Watch_App.SkyWatch.controllers;
 
 
-import com.Sky_Watch_App.SkyWatch.Entities.User;
-import com.Sky_Watch_App.SkyWatch.Repositories.UserRepository;
-import com.Sky_Watch_App.SkyWatch.Services.UserService;
+import com.Sky_Watch_App.SkyWatch.entities.User;
+import com.Sky_Watch_App.SkyWatch.services.UserService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -18,9 +15,12 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public User getUserById(Integer id){
+    public User getUserById(@PathVariable Integer id){
         return userService.getUserById(id);
     }
+
+    @GetMapping("/users")
+    public Iterable<User> getAllUsers() { return userService.getAllUsers();}
 
     @PostMapping("/create")
     public User createNewUser(@RequestBody User user){

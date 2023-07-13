@@ -17,6 +17,8 @@ public class Flight {
     @Column(nullable = false)
     private String flightId;
 
+
+
     private String flightRoute;
 
     private Date flightDate;
@@ -71,6 +73,6 @@ public class Flight {
         this.flightPlane = flightPlane;
     }
 
-    public void setFavflight(FavFlights favFlights) {
+    public void setFavflight(com.Sky_Watch_App.SkyWatch.entities.FavFlights favFlights) {
     }
 }

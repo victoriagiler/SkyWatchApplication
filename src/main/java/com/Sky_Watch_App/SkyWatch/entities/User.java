@@ -1,4 +1,4 @@
-package com.Sky_Watch_App.SkyWatch.Entities;
+package com.Sky_Watch_App.SkyWatch.entities;
 
 
 import jakarta.persistence.Column;
@@ -22,6 +22,10 @@ public class User {
     this.username = username;
     this.password = password;
     this.email = email;
+    }
+
+    public User(){
+
     }
 
     public Integer getId() {

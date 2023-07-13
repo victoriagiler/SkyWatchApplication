@@ -1,7 +1,6 @@
-package com.Sky_Watch_App.SkyWatch.Repositories;
+package com.Sky_Watch_App.SkyWatch.repositories;
 
-import com.Sky_Watch_App.SkyWatch.Entities.User;
-import jakarta.persistence.Id;
+import com.Sky_Watch_App.SkyWatch.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository  extends CrudRepository<User, Integer> {
