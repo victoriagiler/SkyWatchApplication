@@ -1,15 +1,15 @@
-package com.Sky_Watch_App.SkyWatch.Services;
+package com.Sky_Watch_App.SkyWatch.services;
 
 
-import com.Sky_Watch_App.SkyWatch.Entities.User;
-import com.Sky_Watch_App.SkyWatch.Repositories.UserRepository;
+import com.Sky_Watch_App.SkyWatch.entities.User;
+import com.Sky_Watch_App.SkyWatch.repositories.UserRepository;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
+@Service
 public class UserService {
 
     private UserRepository userRepository;
@@ -18,7 +18,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    //Get Request
+    //Get Requests
+
+    public Iterable<User> getAllUsers(){
+        return userRepository.findAll();
+    }
     public User getUserById(Integer id){
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isEmpty()){
