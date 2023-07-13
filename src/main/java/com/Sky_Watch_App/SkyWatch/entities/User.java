@@ -13,15 +13,21 @@ public class User {
     @GeneratedValue
     @Column(nullable = false, updatable = false)
     private Integer id;
+    private String fname;
+
+    private String lname;
+
     private String username;
     private String password;
     private String email;
 
-    public User(Integer id, String username, String password, String email){
+    public User(Integer id, String username, String password, String email, String lname, String fname){
     this.id = id;
     this.username = username;
     this.password = password;
     this.email = email;
+    this.lname = lname;
+    this.fname = fname;
     }
 
     public User(){
@@ -58,5 +64,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 }

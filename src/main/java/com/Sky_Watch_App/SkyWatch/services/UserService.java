@@ -54,6 +54,14 @@ public class UserService {
             updateUser.setUsername((updatedUser.getUsername()));
         }
 
+        if(updatedUser.getFname() != null){
+            updateUser.setFname(updatedUser.getFname());
+        }
+
+        if(updatedUser.getLname() != null){
+            updateUser.setLname(updatedUser.getFname());
+        }
+
         return userRepository.save(updateUser);
 
     }
