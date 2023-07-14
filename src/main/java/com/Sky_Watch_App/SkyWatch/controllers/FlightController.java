@@ -1,60 +1,63 @@
 package com.Sky_Watch_App.SkyWatch.controllers;
 
+import com.Sky_Watch_App.SkyWatch.entities.FlightData;
 import com.Sky_Watch_App.SkyWatch.entities.Flight;
-import com.Sky_Watch_App.SkyWatch.services.FlightService;
-import org.springframework.http.HttpStatus;
+import com.Sky_Watch_App.SkyWatch.repositories.FlightRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
-import java.util.HashMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/flights")
+@RequestMapping("/api/flights")
 public class FlightController {
-private final FlightService flightService;
+    private FlightRepository flightRepository;
 
-    public FlightController(FlightService flightService) {
-        this.flightService = flightService;
-    }
-
-    @GetMapping
-    public ResponseEntity<Iterable<Flight>> findAllFlights(){
-        return ResponseEntity.ok(flightService.findAllFlights());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Flight> getFlightById(@PathVariable Integer id){
-        return ResponseEntity.ok(flightService.getFlightById(id));
+    @Autowired
+    public FlightController(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
     }
 
     @PostMapping
-    public ResponseEntity<Flight> addFlight(@RequestBody Flight flight){
-        Flight savedFlight = flightService.addFlight(flight);
+    public ResponseEntity<String> receiveFlightData(@RequestBody FlightData flightData) {
 
-        URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/flights/{id}")
-                .buildAndExpand(savedFlight.getId())
-                .toUri();
+        // Access specific properties from the flight data
+        String arrivalCity = flightData.getArr_city();
+        String arrivalCountry = flightData.getArr_country();
+        String arrivalName = flightData.getArr_name();
+        String arrivalIata = flightData.getArr_iata();
+        String arrivalTime = flightData.getArr_time();
+        String arrivalEstimated = flightData.getArr_estimated();
 
-        return ResponseEntity.created(location).body(flight);
-    }
+        String departureCity = flightData.getDep_city();
+        String departureCountry = flightData.getDep_country();
+        String departureName = flightData.getDep_name();
+        String departureIata = flightData.getDep_iata();
+        String departureTime = flightData.getDep_time();
+        String departureEstimated = flightData.getDep_estimated();
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Flight>  updatedFlight(@PathVariable Integer id, @RequestBody Flight updates){
-        return ResponseEntity.ok(flightService.updateFlight(id, updates));
-    }
+        // Create a Flight entity object to persist in the database
+        Flight flight = new Flight();
+        flight.setArrCity(arrivalCity);
+        flight.setArrCountry(arrivalCountry);
+        flight.setArrName(arrivalName);
+        flight.setArrIata(arrivalIata);
+        flight.setArrTime(arrivalTime);
+        flight.setArrEstimated(arrivalEstimated);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HashMap<String, Object>> deleteFlight(@PathVariable Integer id){
+        flight.setDepCity(departureCity);
+        flight.setDepCountry(departureCountry);
+        flight.setDepName(departureName);
+        flight.setDepIata(departureIata);
+        flight.setDepTime(departureTime);
+        flight.setDepEstimated(departureEstimated);
 
-        HashMap<String, Object> responseMap = flightService.deleteFlight(id);
+        // Save the flight data to the database
+        flightRepository.save(flight);
 
-        if(responseMap.get("flightInfo") == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
-        }
-
-        return ResponseEntity.ok(responseMap);
+        // Return a response indicating the success or failure of the operation
+        return ResponseEntity.ok("Flight data received and saved successfully");
     }
 }
