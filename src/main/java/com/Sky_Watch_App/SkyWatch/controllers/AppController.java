@@ -13,4 +13,10 @@ public class AppController {
     public String viewHomePage() {
         return "index";
     }
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+
+        return "signup_form";
+    }
 }
