@@ -3,6 +3,7 @@ package com.Sky_Watch_App.SkyWatch.services;
 
 import com.Sky_Watch_App.SkyWatch.entities.User;
 import com.Sky_Watch_App.SkyWatch.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    @Autowired
     private UserRepository userRepository;
 
     public UserService(UserRepository userRepository){
@@ -34,7 +36,8 @@ public class UserService {
 
     //Post Request
     public User createNewUser(User user){
-        return userRepository.save(user);
+        User newUser = userRepository.save(user);
+        return newUser;
     }
 
 
@@ -54,12 +57,12 @@ public class UserService {
             updateUser.setUsername((updatedUser.getUsername()));
         }
 
-        if(updatedUser.getFname() != null){
-            updateUser.setFname(updatedUser.getFname());
+        if(updatedUser.getFirstName() != null){
+            updateUser.setFirstName((updatedUser.getFirstName()));
         }
 
-        if(updatedUser.getLname() != null){
-            updateUser.setLname(updatedUser.getFname());
+        if(updatedUser.getLastName() != null){
+            updateUser.setLastName((updatedUser.getFirstName()));
         }
 
         return userRepository.save(updateUser);
