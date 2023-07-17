@@ -5,6 +5,7 @@ import com.Sky_Watch_App.SkyWatch.entities.User;
 import com.Sky_Watch_App.SkyWatch.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -36,6 +37,12 @@ public class UserService {
 
     //Post Request
     public User createNewUser(User user){
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+
         User newUser = userRepository.save(user);
         return newUser;
     }
