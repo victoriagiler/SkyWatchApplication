@@ -1,33 +1,39 @@
 package com.Sky_Watch_App.SkyWatch.entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Integer id;
-    private String fname;
 
-    private String lname;
+    @Column(name = "first_name", nullable = false, length = 30)
+    private String firstname;
 
+    @Column(name = "last_name", nullable = false, length = 30)
+    private String lastname;
+
+
+    @Column(name = "user_name", nullable = false, length = 30)
     private String username;
+
+    @Column (nullable = false, length = 64)
     private String password;
+
+    @Column(nullable = false, unique = true, length = 64)
     private String email;
 
-    public User(Integer id, String username, String password, String email, String lname, String fname){
+    public User(Integer id, String firstname, String lastname, String email, String username, String password){
     this.id = id;
     this.username = username;
     this.password = password;
     this.email = email;
-    this.lname = lname;
-    this.fname = fname;
+    this.lastname = lastname;
+    this.firstname = firstname;
     }
 
     public User(){
@@ -66,19 +72,19 @@ public class User {
         this.email = email;
     }
 
-    public String getFname() {
-        return fname;
+    public String getFirstName() {
+        return firstname;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return lastname;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLastName(String lastname) {
+        this.lastname = lastname;
     }
 }

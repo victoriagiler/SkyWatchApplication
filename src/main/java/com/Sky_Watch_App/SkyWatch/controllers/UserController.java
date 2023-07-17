@@ -3,11 +3,16 @@ package com.Sky_Watch_App.SkyWatch.controllers;
 
 import com.Sky_Watch_App.SkyWatch.entities.User;
 import com.Sky_Watch_App.SkyWatch.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
     private UserService userService;
 
     public UserController(UserService userService){
